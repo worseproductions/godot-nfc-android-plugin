@@ -5,15 +5,13 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
-// TODO: Update value to your plugin's name.
-val pluginName = "GodotAndroidPluginTemplate"
+val pluginName = "GodotNfcAndroidPlugin"
 
-// TODO: Update value to match your plugin's package name.
-val pluginPackageName = "org.godotengine.plugin.android.template"
+val pluginPackageName = "com.worseproductions.godotnfcandroidplugin"
 
 android {
     namespace = pluginPackageName
-    compileSdk = 33
+    compileSdk = 34
 
     buildFeatures {
         buildConfig = true
@@ -47,18 +45,18 @@ val copyDebugAARToDemoAddons by tasks.registering(Copy::class) {
     description = "Copies the generated debug AAR binary to the plugin's addons directory"
     from("build/outputs/aar")
     include("$pluginName-debug.aar")
-    into("demo/addons/$pluginName/bin/debug")
+    into("build/addon/$pluginName/bin/debug")
 }
 
 val copyReleaseAARToDemoAddons by tasks.registering(Copy::class) {
     description = "Copies the generated release AAR binary to the plugin's addons directory"
     from("build/outputs/aar")
     include("$pluginName-release.aar")
-    into("demo/addons/$pluginName/bin/release")
+    into("build/addon/$pluginName/bin/release")
 }
 
 val cleanDemoAddons by tasks.registering(Delete::class) {
-    delete("demo/addons/$pluginName")
+    delete("build/addon/$pluginName")
 }
 
 val copyAddonsToDemo by tasks.registering(Copy::class) {
@@ -69,7 +67,7 @@ val copyAddonsToDemo by tasks.registering(Copy::class) {
     finalizedBy(copyReleaseAARToDemoAddons)
 
     from("export_scripts_template")
-    into("demo/addons/$pluginName")
+    into("build/addon/$pluginName")
 }
 
 tasks.named("assemble").configure {
